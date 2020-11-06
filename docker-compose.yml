@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  backend:
+    build: ./backend
+    command: npm run start:server
+    volumes:
+      - ./backend:/go/src/github.com/eprakars/diary_bunda/backend/
+    image: diary_bunda/backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+  frontend:
+    build: ./frontend
+    command: npm run start
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/code/src
+      - ./frontend/package.json:/code/package.json
+      - ./frontend/package-lock.json:/code/package-lock.json
+      - ./frontend/.gitignore:/code/.gitignore
+    image: diary_bunda/frontend
+    env_file:
+      - ./frontend/.env
+
+volumes:
+  veyron_postgres_data:
+  veyron_postgres_test_data:
+  redis_data:
